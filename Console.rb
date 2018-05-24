@@ -1,4 +1,4 @@
-require_relative 'webrick\webrick.rb'
+require 'webrick'
 require 'json'
 
 
@@ -104,27 +104,78 @@ end
 $consoleBinding = Sandbox.new.get_binding
 $consoleBinding.eval(ConsoleBindings)
 
+=begin
+JXA for opening safari on a URL (attempt also to hide tab bar):
+    var safari = Application('Safari')
+    doc = safari.Document().make()
+    doc.url = "http://localhost:12357"
+    var system = Application('System Events')
+    system.processes["Safari"].windows[0].actions["AXRaise"].perform()
+    try {
+      system.processes["Safari"].menuBars[0].menus["View"].menuItems["Hide Tab Bar"].click()
+    }catch(e){}
+    try {
+      system.processes["Safari"].menuBars[0].menus["View"].menuItems["Hide Status Bar"].click()
+    }catch(e){}
+    try {
+      system.processes["Safari"].menuBars[0].menus["View"].menuItems["Hide Sidebar"].click()
+    }catch(e){}
+=end
+
 #Making ruby console compatible on all OSes
 if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
     require 'win32/registry'
     chromePath = Win32::Registry::HKEY_LOCAL_MACHINE.open('SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe')[""]
-    `"#{chromePath}" --app="http://localhost:12357"`
+    
+    #Try alternatives till one works:
+    case true
+      when system("\"#{chromePath}\" --app=\"http://localhost:12357\"")
+      else
+        puts "Cannot open browser. Will now exit."
+        exit
+    end
 elsif (/darwin/ =~ RUBY_PLATFORM) != nil
-    `open -n -a "Google Chrome" --args --app="http://localhost:12357"`
+    #Try alternatives till one works:
+    case true
+      when system("open -n -a \"Google Chrome\" --args --app=\"http://localhost:12357\"")
+      else
+        puts "Cannot open browser. Will now exit."
+        exit
+    end
+elsif (/linux/ =~ RUBY_PLATFORM)!=nil
+    #Try alternatives till one works:
+    case true
+      when system("chromium-browser --app=\"http://localhost:12357\"")
+      when system("google-chrome --app=\"http://localhost:12357\"")
+      else
+        puts "Cannot open browser. Will now exit."
+        exit
+    end
 end
 
+
+class NullStream
+   def <<(o); self; end
+end
+
+=begin
+  THIS IS REQUIRED IN ICM 6.5.6 DUE TO AN ERROR IN WEBRICK. IF LOGGER OTHERWISE REQUIRED, YOU CAN MAKE YOUR OWN.
+  :Logger => WEBrick::Log.new(NullStream.new)
+  
+=end
 #remove old reference of server
 $server = nil
 $server = WEBrick::HTTPServer.new(
   :Port=>12357,
-  :DocumentRoot => Dir.pwd
+  :DocumentRoot => Dir.pwd,
+  :Logger => WEBrick::Log.new(NullStream.new),  #fixes some bugs...
+  :AccessLog => [],
 )
 trap 'INT' do $server.shutdown end
 
 
 class RequestHandler < WEBrick::HTTPServlet::AbstractServlet
     def do_GET(request,response)
-        puts request.path
         resource = request.path.to_s[1..-1]
         
         if resource == ""
