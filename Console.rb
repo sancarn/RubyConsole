@@ -1,4 +1,5 @@
 require_relative "GUI.rb"
+require_relative "libs\\GUI.rb"
 
 # Ruby bindings for p and puts
 # ----------------------------
