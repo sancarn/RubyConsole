@@ -1,4 +1,3 @@
-require_relative "GUI.rb"
 require_relative "libs\\GUI.rb"
 
 # Ruby bindings for p and puts
@@ -32,8 +31,10 @@ initScript
 # ultimately will look like this:
 # {:type=>[?:ERROR,:DATA],:data=>{:type=>[?:ERROR,:DATA,:VOID],:log=>$consoleLog, :data=>RESULTS}}
 consoleWrapper=<<endWrapper
+  require 'json'
   code = '{"data":#codeFromJavaScript}'
-  data = $console_binding.eval(JSON.parse(code)["data"])
+  $stdout << JSON.parse(code)["data"].unpack("m*")[0]
+  data = $console_binding.eval(JSON.parse(code)["data"].unpack("m*")[0])
   log = $consoleLog.clone
   $consoleLog = []
   if data == {:type=>:VOID}
@@ -48,7 +49,7 @@ endWrapper
 # Uses a bit of an odd method of injecting the code, but this turns out to be the safest way of injecting
 # code into injected code, while also maintaining error messages (from my testing at least):
 # (JS) JSON.stringify(JSON.stringify(code)): 1+1 ==> (JS) "\"1+1\"" ==> (Ruby) JSON.parse() ==> "1+1" ==> (Ruby) eval()
-consoleWrapper = consoleWrapper.to_json.sub("#codeFromJavaScript","\" + JSON.stringify(code) + \"")
+consoleWrapper = consoleWrapper.to_json.sub("#codeFromJavaScript","\" + JSON.stringify(btoa(code)) + \"")
 
 # HTML body:
 DefaultBody=<<ENDBODY
