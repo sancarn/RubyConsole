@@ -33,7 +33,6 @@ initScript
 consoleWrapper=<<endWrapper
   require 'json'
   code = '{"data":#codeFromJavaScript}'
-  $stdout << JSON.parse(code)["data"].unpack("m*")[0]
   data = $console_binding.eval(JSON.parse(code)["data"].unpack("m*")[0])
   log = $consoleLog.clone
   $consoleLog = []
