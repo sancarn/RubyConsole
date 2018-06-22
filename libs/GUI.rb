@@ -218,7 +218,7 @@ module GUI
 
   class GUI
     attr_reader :defaultHTML, :options
-    attr_accessor :server, :runtime
+    attr_accessor :server, :runtime, :received_requests
 
     def setArg(symbol,value)
       if !@running
