@@ -7,4 +7,5 @@ This console requires Google Chrome to be installed.
 ![preview](./Preview.png)
 
 This library primarily uses the ChromeConsole found here:
+
 https://tarvk.github.io/chromeConsole/About.html
