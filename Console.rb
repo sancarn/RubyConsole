@@ -1,4 +1,4 @@
-require_relative "libs\\GUI.rb"
+require_relative "libs/GUI.rb"
 
 # Ruby bindings for p and puts
 # ----------------------------
@@ -57,12 +57,12 @@ DefaultBody=<<ENDBODY
             <title>Ruby Console</title>
 
             <!--<  Include jQuery and Ace  >-->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"></script>
+            <script src="libs/js/jquery.min.js"></script>
+            <script src="libs/js/ace.min.js"></script>
 
             <!--<  Include console.js and console.css >-->
-            <script src="https://cdn.rawgit.com/TarVK/chromeConsole/version-1.0/console.js"></script>
-            <link rel="stylesheet" href="https://cdn.rawgit.com/TarVK/chromeConsole/version-1.0/console.css" type="text/css" />
+            <script src="libs/js/console.js"></script>
+            <link rel="stylesheet" href="libs/css/console.css" type="text/css" />
 
             <style>
                 html, body, .console{
