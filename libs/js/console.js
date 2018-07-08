@@ -1,3 +1,15 @@
+// Original Author: TarVK
+// Modified by: Sancarn
+// Changes:
+//  * Better representation for Ruby Hashes:
+//     var colon = "<span class='ace_punctuation ace_operator'>:</span>";
+//     ==>
+//     var colon = "<span class='ace_punctuation ace_operator'> =></span>";
+// * Null to until
+//     var nul = "<span class='ace_constant ace_language'>null</span>";
+//     ==>
+//     var nul = "<span class='ace_constant ace_language'>nil</span>";
+
 (function(){
     var Range = ace.require("ace/range").Range;
     var log = console.log.bind(console); //for debugging, as I have variables called console
@@ -40,10 +52,10 @@
     var lSquareBrack = "<span class='ace_lparen'>[</span>";
     var rSquareBrack = "<span class='ace_rparen'>]</span>";
     var ddd = "<span class='dotdotdot'>...</span>";
-    var colon = "<span class='ace_punctuation ace_operator'>:</span>";
+    var colon = "<span class='ace_punctuation ace_operator'> =></span>";
     var comma = "<span class='ace_punctuation ace_operator'>,</span>";
     var undef = "<span class='ace_constant ace_language'>undefined</span>";
-    var nul = "<span class='ace_constant ace_language'>null</span>";
+    var nul = "<span class='ace_constant ace_language'>nil</span>";
     var func = "<span class=''>f</span>"+lBrack+rBrack;
     function getNumericText(val, clas){
         return "<span class='"+(clas||"")+" ace_constant ace_numeric'>"+htmlEscape(val.toString())+"</span>";

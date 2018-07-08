@@ -120,7 +120,6 @@ DefaultBody=<<ENDBODY
                                         cons.error(ret.data);
                                         break;
                                 }
-
                             });
                         },
                         mode: "ruby"
