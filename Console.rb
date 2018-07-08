@@ -58,7 +58,7 @@ DefaultBody=<<ENDBODY
 
             <!--<  Include jQuery and Ace  >-->
             <script src="libs/js/jquery.min.js"></script>
-            <script src="libs/js/ace.min.js"></script>
+            <script src="libs/js/ace/ace.js"></script>
 
             <!--<  Include console.js and console.css >-->
             <script src="libs/js/console.js"></script>
