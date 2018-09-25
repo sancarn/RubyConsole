@@ -73,7 +73,7 @@ module GUI
       require 'win32/registry'
       if Win32::Registry::HKEY_LOCAL_MACHINE.open('SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths').keys.include? "chrome.exe"
         return :chrome
-      elsif Dir.entries("#{ENV["SystemRoot"]}\\SystemApps\\").select {|s| s[/Microsoft\.MicrosoftEdge.+/]}.length
+      elsif Dir.exists?("#{ENV["SystemRoot"]}\\SystemApps\\") && Dir.entries("#{ENV["SystemRoot"]}\\SystemApps\\").select {|s| s[/Microsoft\.MicrosoftEdge.+/]}.length
         return :edge
       else
         return :ie
