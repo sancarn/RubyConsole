@@ -163,7 +163,8 @@ $console_binding.eval(ConsoleBindings)
 # Create a new GUI
 gui = GUI::GUI.new(DefaultBody,{
   :rubyInitScript => ConsoleBindings,
-  :customIcon => CustomIcon
+  :customIcon => CustomIcon,
+  :documentRoot => File.dirname(__FILE__)
 })
 
 # Show the GUI syncronously
