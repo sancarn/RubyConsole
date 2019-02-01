@@ -212,7 +212,7 @@ module GUI
           return
         end
       else
-        response.body = File.read(Dir.pwd + request.path)
+        response.body = File.read(@parent.options[:documentRoot] + request.path)
       end
     end
   end
