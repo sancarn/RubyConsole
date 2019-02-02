@@ -63,7 +63,11 @@ DefaultBody=<<ENDBODY
             <!--<  Include console.js and console.css >-->
             <script src="libs/js/console.js"></script>
             <link rel="stylesheet" href="libs/css/console.css" type="text/css" />
-
+            
+            <!--<  Include autocomplete.js >-->
+            <script src="libs/js/autocomplete.js"></script>
+            <link rel="stylesheet" href="libs/css/autocomplete.css" type="text/css" />
+            
             <style>
                 html, body, .console{
                     width: 100%;
@@ -73,29 +77,6 @@ DefaultBody=<<ENDBODY
             </style>
 
             <script>
-                //AUTOCOMPLETION:
-                //---------------------------------------------------------------------------
-                //Ruby.eval(getPreText() + ".methods",function(methods)
-                //   //Display methods in popup
-                //})
-                function getPreText(){
-                  var cons = $(".console").console()
-                  var cpos = cons.inputEditor.getCursorPosition();
-                  var pretext = null
-                  rowtext = cons.inputEditor.getValue().split("\\n")[cpos["row"]]
-                  if(rowtext.substr(cpos["column"]-1,1)=="."){
-                    var char = ".";
-                    var pos = cpos["column"]-2;
-                    while(!char.match(/\\s/) && pos != 0){
-                      pos--
-                      char = rowtext.substr(pos,1)
-                    }
-                    pretext = rowtext.substr(pos==0 ? 0 : pos+1,cpos["column"]-pos)
-                  }
-                  return pretext
-                }
-                //---------------------------------------------------------------------------
-
                 $(function(){
                     var cons = $(".console").console({
                         onInput: function(code){
