@@ -85,20 +85,19 @@ DefaultBody=<<ENDBODY
                             code = #{consoleWrapper}
                             console.log(code)
 
-                            evaluateRuby(code,function(data){
-                                var ret = JSON.parse(data)
-                                console.log(ret)
-                                switch(ret.type){
+                            Ruby.eval(code,function(data){
+                                console.log(data);
+                                switch(data.type){
                                     case "DATA":
-                                      if(ret.data.type=="DATA"){
-                                        cons.output(ret.data.data)
+                                      if(data.data.type=="DATA"){
+                                        cons.output(data.data.data)
                                       }
-                                      ret.data.log.forEach(function(line){
+                                      data.data.log.forEach(function(line){
                                           cons.log(line);
                                       });
                                       break;
                                     case "ERROR":
-                                        cons.error(ret.data);
+                                        cons.error(data.data);
                                         break;
                                 }
                             });
@@ -118,14 +117,6 @@ DefaultBody=<<ENDBODY
                     });
 
                 });
-                function evaluateRuby(script,callback){
-                    request = new XMLHttpRequest
-                    request.onload = function(){
-                        callback(this.responseText)
-                    }
-                    request.open("EVAL","")
-                    request.send(script)
-                }
             </script>
         </head>
         <body>
