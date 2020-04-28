@@ -4,7 +4,11 @@ This project was initially written due to the lack of `irb` in InfoWorks ICM. Ho
 
 This console requires one of Google Chrome, Internet Explorer, Edge or Safari to be installed. Currently we do not have support for Mozilla Firefox, however if anyone knows the command line instructions for each platform, send them over!
 
-![preview](./Preview.png)
+![preview](./docs/Preview.png)
+
+Now with intellisense!
+
+![preview](./docs/Intellisense.png)
 
 This library primarily uses the ChromeConsole found here:
 
